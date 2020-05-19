@@ -13,7 +13,7 @@ def main():
 
     try:
         r = requests.request("GET", url)
-        with open('../data/hearthstone_raw_cards_data.json', 'w', encoding='utf-8') as f:
+        with open('../../data/hearthstone_raw_cards_data.json', 'w', encoding='utf-8') as f:
             json.dump(r.json(), f, ensure_ascii=False, indent=4)
 
     except requests.exceptions.Timeout as err:

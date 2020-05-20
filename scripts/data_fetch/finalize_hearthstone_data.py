@@ -14,13 +14,13 @@ def clean_data(cards_data):
                     "health": card["health"],
                 })
 
-    with open('../data/hearthstone_clean_cards_data.json', 'w', encoding='utf-8') as f:
+    with open('../../data/hearthstone_clean_cards_data.json', 'w', encoding='utf-8') as f:
         json.dump(new_cards_data, f, ensure_ascii=False, indent=4)
 
 
 def main():
     cards_data = None
-    with open('../data/hearthstone_raw_cards_data.json') as f:
+    with open('../../data/hearthstone_raw_cards_data.json') as f:
         cards_data = json.load(f)
 
     clean_data(cards_data)

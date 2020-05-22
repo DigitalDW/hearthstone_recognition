@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>CS2_150_8.png</filename>
+	<path>/Users/DigitalDW/Desktop/Hearthstone_recognition/images/train/CS2_150_8.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>861</width>
+		<height>422</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>CS2_150</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>201</xmin>
+			<ymin>227</ymin>
+			<xmax>304</xmax>
+			<ymax>363</ymax>
+		</bndbox>
+	</object>
+</annotation>

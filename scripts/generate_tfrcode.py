@@ -17,7 +17,10 @@ import os
 import io
 import pandas as pd
 import tensorflow as tf
+import json
 
+with open("./class_text_to_int.json") as f:
+    class_text_to_int_dict = json.load(f)
 
 flags = tf.compat.v1.flags
 flags.DEFINE_string('csv_input', '', 'Path to the CSV input')
@@ -28,19 +31,7 @@ FLAGS = flags.FLAGS
 
 # TO-DO replace this with label map
 def class_text_to_int(row_label):
-    labels = os.listdir(os.path.join(FLAGS.image_dir))
-    labels_list = list()
-    for label in labels:
-        label_info = label.split("_")
-        image_id = label_info[0] + "_" + label_info[1]
-        if image_id not in labels_list:
-            labels_list.append(image_id)
-
-    labels_dict = dict()
-    for i in range(len(labels_list)):
-        labels_dict[labels_list[i]] = i
-
-    return labels_dict[row_label]
+    return class_text_to_int_dict[row_label]
 
 
 def split(df, group):

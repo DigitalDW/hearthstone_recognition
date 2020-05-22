@@ -28,10 +28,19 @@ FLAGS = flags.FLAGS
 
 # TO-DO replace this with label map
 def class_text_to_int(row_label):
-    if row_label == 'raccoon':
-        return 1
-    else:
-        None
+    labels = os.listdir(os.path.join(FLAGS.image_dir))
+    labels_list = list()
+    for label in labels:
+        label_info = label.split("_")
+        image_id = label_info[0] + "_" + label_info[1]
+        if image_id not in labels_list:
+            labels_list.append(image_id)
+
+    labels_dict = dict()
+    for i in range(len(labels_list)):
+        labels_dict[labels_list[i]] = i
+
+    return labels_dict[row_label]
 
 
 def split(df, group):

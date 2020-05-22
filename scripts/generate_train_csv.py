@@ -8,7 +8,7 @@ with open('./basic_train_labels.csv', newline="\n") as csv_file:
     reader = csv.reader(csv_file, delimiter=",")
     data = [row for row in reader]
 
-with open('./train_labels.csv', "w", newline="\n") as csv_file:
+with open('../images/train_labels.csv', "w", newline="\n") as csv_file:
     writer = csv.writer(csv_file, delimiter=",")
     writer.writerow(data[0])
     locations = dict()

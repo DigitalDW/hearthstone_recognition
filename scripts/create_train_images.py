@@ -1,4 +1,4 @@
-from PIL import Image, ImageChops, ImageDraw, ImageColor, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter
 import json
 import os
 
@@ -11,50 +11,47 @@ OUTPUT_DIRECTORY = "../images/train/"
 def main():
     img_n = range(10)
     images = [None for _ in img_n]
-    filename = FILES[4]
+    for e in range(5):
+        filename = FILES[e]
 
-    og = Image.open(DIRECTORY + filename)
-    width, height = og.size
+        og = Image.open(DIRECTORY + filename)
+        width, height = og.size
 
-    resized = og.resize((int(width/3.2), int(height/3.2)), Image.ANTIALIAS)
+        resized = og.resize((int(width/3.2), int(height/3.2)), Image.ANTIALIAS)
 
-    frozen_filter = freeze(width, height)
-    resized_f = freeze_card(og, frozen_filter)
+        frozen_filter = freeze(width, height)
+        resized_f = freeze_card(og, frozen_filter)
 
-    for i in img_n:
-        bg = Image.open("../images/raw/bg/bg.png")
-        r45 = resized.rotate(45, expand=True)
-        r180 = resized.rotate(180, expand=True)
-        r90 = resized.rotate(90, expand=True)
-        rm90 = resized.rotate(-90, expand=True)
-        r270 = resized.rotate(270, expand=True)
-        fm45 = resized_f.rotate(-45, expand=True)
-        f90 = resized_f.rotate(90, expand=True)
-        bg.paste(resized, (379, 195), resized) if i == 0 else (
-            bg.paste(r45, (600, 50), r45) if i == 1 else (
-                bg.paste(r180, (575, 238), r180) if i == 2 else (
-                    bg.paste(r270, (130, 60), r270) if i == 3 else (
-                        bg.paste(resized_f, (420, 50), resized_f) if i == 4 else (
-                            bg.paste(r45, (300, 60), r45) if i == 5 else (
-                                bg.paste(r90, (600, 240), r90) if i == 6 else (
-                                    bg.paste(rm90, (300, 240), rm90) if i == 7 else (
-                                        bg.paste(fm45, (200, 220), fm45) if i == 8 else (
-                                            bg.paste(f90, (470, 238), f90)
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        )
-        images[i] = bg
+        for i in img_n:
+            bg = Image.open("../images/raw/bg/bg.png")
+            r180 = resized.rotate(180, expand=True)
+            f180 = resized_f.rotate(180, expand=True)
+            if i == 0:
+                bg.paste(resized, (379, 195), resized)
+            elif i == 1:
+                bg.paste(resized, (600, 50), resized)
+            elif i == 2:
+                bg.paste(r180, (575, 238), r180)
+            elif i == 3:
+                bg.paste(resized, (130, 60), resized)
+            elif i == 4:
+                bg.paste(resized_f, (420, 50), resized_f)
+            elif i == 5:
+                bg.paste(resized, (300, 60), resized)
+            elif i == 6:
+                bg.paste(resized, (600, 240), resized)
+            elif i == 7:
+                bg.paste(r180, (300, 240), r180)
+            elif i == 8:
+                bg.paste(resized_f, (200, 220), resized_f)
+            else:
+                bg.paste(f180, (470, 238), f180)
+            images[i] = bg
 
-    output = filename.split(".")
-    for i in img_n:
-        images[i].save(OUTPUT_DIRECTORY + output[0] +
-                       "_" + str(i) + "." + output[1])
+        output = filename.split(".")
+        for i in img_n:
+            images[i].save(OUTPUT_DIRECTORY + output[0] +
+                           "_" + str(i) + "." + output[1])
 
 
 def freeze(width, height):
@@ -129,6 +126,32 @@ def freeze_card(og, frozen):
     frozen_card = Image.new("RGBA", (width_f, height_f))
     frozen_card.paste(og, (int((width_f - width)/2),
                            int((height_f - height)/2)), og)
+
+    # Augmenter la luminosité et le contraste
+    brightness = ImageEnhance.Brightness(frozen_card)
+    frozen_card = brightness.enhance(1.33)
+    contrast = ImageEnhance.Contrast(frozen_card)
+    frozen_card = contrast.enhance(1.33)
+
+    """
+    # Add light blue filter
+    image_to_composite = Image.new("RGBA", (width_f, height_f))
+    hue = Image.new("RGBA", (width_f, height_f))
+    mask = Image.new("L", (width_f, height_f), 0)
+
+    hue_circle = ImageDraw.Draw(hue, "RGBA")
+    hue_circle.ellipse(
+        [(30, 30), (width+30, height_f-30)], "#14b6e3", None)
+
+    hue_mask_circle = ImageDraw.Draw(mask, "L")
+    hue_mask_circle.ellipse(
+        [(30, 30), (width+30, height_f-30)], 255, None)
+
+    hue.putalpha(128)
+
+    hue = Image.composite(hue, image_to_composite, mask)
+
+    frozen_card.paste(hue, (0, 0), hue)"""
     frozen_card.paste(frozen, (0, 0), frozen)
     return frozen_card.resize(
         (int(width/2.6), int(height/2.6)),

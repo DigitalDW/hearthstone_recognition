@@ -17,35 +17,41 @@ def main():
         og = Image.open(DIRECTORY + filename)
         width, height = og.size
 
-        resized = og.resize((int(width/3.2), int(height/3.2)), Image.ANTIALIAS)
+        resized1 = og.resize(
+            (int(width/3.2), int(height/3.2)), Image.ANTIALIAS)
+        resized2 = og.resize((int(width/2), int(height/2)), Image.ANTIALIAS)
+        resized3 = og.resize(
+            (int(width/4.1), int(height/4.1)), Image.ANTIALIAS)
+        resized4 = og.resize(
+            (int(width/3.8), int(height/3.8)), Image.ANTIALIAS)
+        resized5 = og.resize(
+            (int(width/3.5), int(height/3.5)), Image.ANTIALIAS)
 
         frozen_filter = freeze(width, height)
         resized_f = freeze_card(og, frozen_filter)
 
         for i in img_n:
             bg = Image.open("../images/raw/bg/bg.png")
-            r180 = resized.rotate(180, expand=True)
-            f180 = resized_f.rotate(180, expand=True)
             if i == 0:
-                bg.paste(resized, (379, 195), resized)
+                bg.paste(resized1, (379, 195), resized1)
             elif i == 1:
-                bg.paste(resized, (600, 50), resized)
+                bg.paste(resized2, (600, 50), resized2)
             elif i == 2:
-                bg.paste(r180, (575, 238), r180)
+                bg.paste(resized4, (575, 238), resized4)
             elif i == 3:
-                bg.paste(resized, (130, 60), resized)
+                bg.paste(resized4, (130, 60), resized4)
             elif i == 4:
                 bg.paste(resized_f, (420, 50), resized_f)
             elif i == 5:
-                bg.paste(resized, (300, 60), resized)
+                bg.paste(resized3, (300, 60), resized3)
             elif i == 6:
-                bg.paste(resized, (600, 240), resized)
+                bg.paste(resized5, (600, 240), resized5)
             elif i == 7:
-                bg.paste(r180, (300, 240), r180)
+                bg.paste(resized2, (300, 240), resized2)
             elif i == 8:
                 bg.paste(resized_f, (200, 220), resized_f)
             else:
-                bg.paste(f180, (470, 238), f180)
+                bg.paste(resized1, (470, 238), resized1)
             images[i] = bg
 
         output = filename.split(".")

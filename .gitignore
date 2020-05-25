@@ -2,6 +2,6 @@
 images/raw/*
 images/test/*
 images/train/*
-images/treated/*
 labelImg-master/*
 training/*
+training copy/*

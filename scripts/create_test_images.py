@@ -10,7 +10,7 @@ OUTPUT_DIRECTORY = "../images/test/"
 
 
 def main():
-    img_n = range(2)
+    img_n = range(3)
     images = [None for _ in img_n]
     for e in range(5):
         filename = FILES[e]
@@ -18,7 +18,10 @@ def main():
         og = Image.open(DIRECTORY + filename)
         width, height = og.size
 
-        resized = og.resize((int(width/3.2), int(height/3.2)), Image.ANTIALIAS)
+        resized1 = og.resize(
+            (int(width/3.2), int(height/3.2)), Image.ANTIALIAS)
+        resized2 = og.resize(
+            (int(width/3.5), int(height/3.5)), Image.ANTIALIAS)
 
         frozen_filter = freeze(width, height)
         resized_f = freeze_card(og, frozen_filter)
@@ -26,9 +29,11 @@ def main():
         for i in img_n:
             bg = Image.open("../images/raw/bg/bg.png")
             if i == 0:
-                bg.paste(resized, (679, 195), resized)
-            else:
+                bg.paste(resized1, (679, 195), resized1)
+            elif i == 1:
                 bg.paste(resized_f, (164, 180), resized_f)
+            else:
+                bg.paste(resized2, (679, 195), resized2)
             images[i] = bg
 
         output = filename.split(".")

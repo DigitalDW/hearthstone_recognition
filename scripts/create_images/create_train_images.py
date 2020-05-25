@@ -2,10 +2,10 @@ from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter
 import json
 import os
 
-DIRECTORY = "../images/raw/crops/"
+DIRECTORY = "../../images/raw/crops/"
 FILES = os.listdir(DIRECTORY)
 
-OUTPUT_DIRECTORY = "../images/train/"
+OUTPUT_DIRECTORY = "../../images/train/"
 
 
 def main():
@@ -31,7 +31,7 @@ def main():
         resized_f = freeze_card(og, frozen_filter)
 
         for i in img_n:
-            bg = Image.open("../images/raw/bg/bg.png")
+            bg = Image.open("../../images/raw/bg/bg.png")
             if i == 0:
                 bg.paste(resized1, (379, 195), resized1)
             elif i == 1:

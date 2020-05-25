@@ -3,10 +3,10 @@ import json
 import os
 from create_train_images import freeze, freeze_card
 
-DIRECTORY = "../images/raw/crops/"
+DIRECTORY = "../../images/raw/crops/"
 FILES = os.listdir(DIRECTORY)
 
-OUTPUT_DIRECTORY = "../images/test/"
+OUTPUT_DIRECTORY = "../../images/test/"
 
 
 def main():
@@ -27,7 +27,7 @@ def main():
         resized_f = freeze_card(og, frozen_filter)
 
         for i in img_n:
-            bg = Image.open("../images/raw/bg/bg.png")
+            bg = Image.open("../../images/raw/bg/bg.png")
             if i == 0:
                 bg.paste(resized1, (679, 195), resized1)
             elif i == 1:

@@ -1,7 +1,7 @@
 import os
 import json
 
-labels = os.listdir("../images/test/")
+labels = os.listdir("../../images/test/")
 labels_list = list()
 for label in labels:
     if os.path.splitext(label)[1] == ".png":

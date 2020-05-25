@@ -4,4 +4,5 @@ images/test/*
 images/train/*
 labelImg-master/*
 training/*
-training copy/*
+training_first_attempt/*
+scripts/hearthston_inference_graph_second_attempt/*
